@@ -36,7 +36,7 @@ export class ListsService {
     return this.cutCollection.doc(id).update(cut);
   }
 
-  addCut(cutName: string, recipeList: string): Promise<void> {
+  addCut(cutName: string, recipeList: object): Promise<void> {
     const id = this.db.createId();
     return this.db.doc(`cutList/${id}`).set({
       id,

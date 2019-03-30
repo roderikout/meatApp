@@ -4,6 +4,7 @@ import { ListsService } from 'src/app/services/lists.service';
 import { NavController, LoadingController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cut-detail-edit',
@@ -12,10 +13,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class CutDetailEditPage implements OnInit {
 
+  recipeCSV = '';
+  recipeObject = {};
   cut: MeatCut = {
     id: '',
     cutName: '',
-    recipeList: '',
+    recipeList: {},
   };
 
   cutId = null;
@@ -30,6 +33,35 @@ export class CutDetailEditPage implements OnInit {
       this.loadCut();
     }
   }
+
+  toArray(csvString: string): string[] {
+    return csvString.split(',');
+  }
+
+  objToArray(object: object): string[] {
+    let keys = [];
+    for (let k in object) {
+      keys.push(k);
+    };
+    return keys;
+  }
+
+  toObject(csvValue: string): object {
+    const newObject = {};
+    const newArray: string[] = this.toArray(csvValue);
+    for (let k in newArray){
+      let name: string = newArray[k];
+      newObject[name] = true;
+    }
+    console.log(newObject);
+    return newObject;
+  }
+
+  toCSV(arrayValue: string[]): string {
+    let csv = '';
+    return csv = arrayValue.join(', ');
+  }
+
   async loadCut() {
     const loading = await this.loadingController.create({
       message: 'Loading.....'
@@ -38,8 +70,10 @@ export class CutDetailEditPage implements OnInit {
     this.listsService.getCut(this.cutId).subscribe(res => {
       loading.dismiss();
       this.cut = res;
+      this.recipeCSV = this.toCSV(this.objToArray(this.cut.recipeList));
     });
   }
+
 
   async saveCut() {
     const loading = await this.loadingController.create({
@@ -48,12 +82,14 @@ export class CutDetailEditPage implements OnInit {
     await loading.present();
 
     if (this.cutId) {
+      this.cut.recipeList = this.toObject(this.recipeCSV);
       this.listsService.updateCut(this.cut, this.cutId).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/cut-list');
       });
     } else {
       this.cut.id = this.firestore.createId();
+      this.cut.recipeList = this.toObject(this.recipeCSV);
       this.listsService.addCut(this.cut.cutName, this.cut.recipeList).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/cut-list');

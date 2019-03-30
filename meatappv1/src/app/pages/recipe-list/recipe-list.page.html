@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+        <ion-back-button defaultHref="home"></ion-back-button>
       </ion-buttons>
       <ion-title>
         Recetas con carne
@@ -9,6 +9,20 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-content padding>
-
-</ion-content>
+  <ion-content>
+      <ion-list>
+        <ion-item-sliding *ngFor="let recipe of recipeList">
+          <ion-item lines='inset' button [routerLink]="['/recipe-detail', recipe.id]">
+            <ion-label position="floating">
+              {{recipe.recipeName}}
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button routerLink="/recipe-detail-edit" routerDirection="forward">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ion-content>
+    

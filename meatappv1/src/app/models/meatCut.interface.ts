@@ -1,5 +1,7 @@
 export interface MeatCut {
     id: string;
     cutName: string;
-    recipeList?: string;
+    recipeList?: object;
+    places?: string[];
+    languages?: string[];
 }

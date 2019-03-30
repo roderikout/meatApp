@@ -17,7 +17,8 @@
       </ion-item>
       <ion-item *ngIf="cut" text-wrap>
         <ion-label position="stacked">Recetas:</ion-label>
-        <ion-input reuired type="text" placeholder="Recetas" [(ngModel)]="cut.recipeList"></ion-input>
+        <!--<ion-input reuired type="text" placeholder="Recetas" [(ngModel)]="cut.recipeList"></ion-input>-->
+        <ion-input reuired type="text" placeholder="Recetas" [(ngModel)]="recipeCSV"></ion-input>
       </ion-item>
   </ion-list>
   <ion-button expand="full" (click)="saveCut()">Guardar</ion-button> 

@@ -24,7 +24,15 @@
             Recetas:
           </ion-item>
           <ion-item>
-            <h4>{{ cut.recipeList }}</h4>
+            <ion-grid>
+              <ion-row>
+                <ion-col size-md="5" offset-md='3'>
+                  <ion-item *ngFor="let recipe of recipeArray">
+                    <h4>{{ recipe }}</h4>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
         </ion-list>
       </ion-col>

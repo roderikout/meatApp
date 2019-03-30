@@ -16,10 +16,19 @@ export class CutDetailPage implements OnInit {
   cut: MeatCut = {
     id: '',
     cutName: '',
-    recipeList: '',
+    recipeList: {},
   };
 
+  recipeArray = [];
   cutId = null;
+
+  objToArray(object: object): string[] {
+    let keys = [];
+    for (let k in object) {
+      keys.push(k);
+    };
+    return keys;
+  }
 
   constructor (private route: ActivatedRoute, private nav: NavController,
     private listsService: ListsService, private loadingController: LoadingController,
@@ -31,6 +40,7 @@ export class CutDetailPage implements OnInit {
       this.loadCut();
     }
   }
+
   async loadCut() {
     const loading = await this.loadingController.create({
       message: 'Loading.....'
@@ -39,6 +49,7 @@ export class CutDetailPage implements OnInit {
     this.listsService.getCut(this.cutId).subscribe(res => {
       loading.dismiss();
       this.cut = res;
+      this.recipeArray = this.objToArray(this.cut.recipeList);
     });
   }
 }
