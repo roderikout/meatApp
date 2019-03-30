@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color='primary'>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Nuevo corte</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <form [formGroup]="createCutForm" (submit)="createCut()">
+      <ion-item>
+        <ion-label stacked>Nombre del corte</ion-label>
+        <ion-input formControlName="cutName" type="text" placeholder="Cómo se llama el corte?">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Recetas asociadas</ion-label>
+          <ion-input formControlName="recipeList" type="text" placeholder="Qué se puede cocinar con él?">
+        </ion-input>
+      </ion-item>
+        
+      <ion-button expand="block" type="submit"
+        [disabled]="!createCutForm.valid">
+        Nuevo corte
+      </ion-button>
+    </form>
+  </ion-content>

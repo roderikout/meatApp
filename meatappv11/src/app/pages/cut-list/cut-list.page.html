@@ -1,0 +1,30 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Cortes de carne
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="titleList">
+        <h1 >Cortes de Carne</h1>
+      </ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let cut of cutList | async">
+        <ion-item lines='inset' button routerLink="cut-detail" routerDirection="forward">
+        <!-- <ion-item lines='inset' button routerLink="['cut-detail', cut.id]" routerDirection="forward"> -->
+        <ion-label position="floating">
+          {{cut.cutName}}
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/cut-add" routerDirection="forward">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

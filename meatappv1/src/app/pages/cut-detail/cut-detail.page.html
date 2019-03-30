@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="cut">
+      {{ cut.cutName }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md='3'>
+        <ion-list>
+          <ion-item *ngIf="cut">
+            Nombre:
+          </ion-item>
+          <ion-item>
+            <h3>{{ cut.cutName }}</h3>
+          </ion-item>
+          <ion-item>
+            Recetas:
+          </ion-item>
+          <ion-item>
+            <h4>{{ cut.recipeList }}</h4>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+    
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+    <ion-fab-button color="primary" [routerLink]="['/cut-detail-edit', cut.id]" routerDirection="forward">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

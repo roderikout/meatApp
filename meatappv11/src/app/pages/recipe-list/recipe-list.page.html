@@ -1,0 +1,21 @@
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label class="titleList">
+        <h1 >Recetas con carne</h1>
+      </ion-label>
+    </ion-list-header>
+    <ion-item-sliding *ngFor="let recipe of recipeList | async">
+      <ion-item lines='inset' button [routerLink]="['/recipe-detail', recipe.id]">
+        <ion-label position="floating">
+          {{recipe.recipeName}}
+        </ion-label>
+      </ion-item>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/recipe-add" routerDirection="forward">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
