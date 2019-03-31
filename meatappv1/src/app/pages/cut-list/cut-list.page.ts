@@ -19,7 +19,6 @@ export class CutListPage implements OnInit {
   ionViewWillEnter() {
     this.listsService.getCutList().subscribe(res => {
       this.cutList = res;
-      // console.log('Lista de cortes ', this.cutList);
     });
   }
 }

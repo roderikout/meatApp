@@ -16,6 +16,7 @@ import { HelperServiceService } from 'src/app/services/helper-service.service';
 export class CutDetailEditPage implements OnInit {
 
   recipeCSV = '';
+  cutName = '';
   cut: MeatCut = {
     id: '',
     cutName: '',
@@ -45,66 +46,28 @@ export class CutDetailEditPage implements OnInit {
       loading.dismiss();
       this.cut = res;
       this.recipeCSV = this.helperService.arrayToCsv(this.helperService.objToArray(this.cut.recipeList));
+      this.cutName = this.helperService.titleCase(this.cut.cutName);
     });
   }
 
-  /* recipesInCutThatAreNotInRecipesList(cutList: string[]): string[] {
-    const recipeNameList: string[] = [];
-    let recipeList: Recipe[];
-    const recipesToInclude: string[] = [];
-    this.listsService.getRecipeList().subscribe(res => {
-      recipeList = res;
-    });
-    for (const o in recipeList) {
-      if (recipeList.hasOwnProperty(o)) {
-        const recipesObjects = Object.values(o);
-        for (const n in recipesObjects) {
-          if (recipesObjects.hasOwnProperty(n)) {
-            recipeNameList.push(n);
-          }
-        }
-      }
-    }
-    for (const r in cutList) {
-      if (cutList.hasOwnProperty(r)) {
-        if (recipeNameList.includes(r)) {
-          continue;
-        } else {
-          recipesToInclude.push(r);
-        }
-      }
-    }
-    return recipesToInclude;
-  }
- */
   async saveCut() {
     const loading = await this.loadingController.create({
       message: 'Saving.....'
     });
     await loading.present();
 
-    /* // verificar recetas y crear la lista de recetas correspondiente para guardar en recipeList
-    const arrayOfRecipes = this.csvToArray(this.recipeCSV);
-    const recipesToInclude = this.recipesInCutThatAreNotInRecipesList(arrayOfRecipes);
-    if (recipesToInclude.length > 0) {
-      for (const r in recipesToInclude){
-        if (recipesToInclude.hasOwnProperty(r)) {
-          arrayOfRecipes.push(r);
-        }
-      }
-      // this.cut.recipeList = this.arrayToObject(arrayOfRecipes);
-    } */
-
-    // Si es un corte existente, guardarlo sin crear un nuevo ID
+    // Si es un corte existente, (si vengo de cutList), guardar los cambios sin crear un nuevo ID
     if (this.cutId) {
       this.cut.recipeList = this.helperService.csvToObject(this.recipeCSV);
+      this.cut.cutName = this.helperService.titleCase(this.cutName);
       this.listsService.updateCut(this.cut, this.cutId).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/cut-list');
       });
-    } else { // Si el corte no existe, crear un nuevo id y guardarlo
+    } else { // Si el corte no existe, (si vengo de add), crear un nuevo id y guardar todo
       this.cut.id = this.firestore.createId();
       this.cut.recipeList = this.helperService.csvToObject(this.recipeCSV);
+      this.cut.cutName = this.helperService.titleCase(this.cutName);
       this.listsService.addCut(this.cut.cutName, this.cut.recipeList).then(() => {
         loading.dismiss();
         this.nav.navigateForward('/cut-list');
