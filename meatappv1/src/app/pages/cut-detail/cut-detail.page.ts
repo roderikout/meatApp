@@ -23,14 +23,6 @@ export class CutDetailPage implements OnInit {
   recipeArray = [];
   cutId = null;
 
- /*  objToArray(object: object): string[] {
-    let keys = [];
-    for (let k in object) {
-      keys.push(k);
-    };
-    return keys;
-  } */
-
   constructor (private route: ActivatedRoute, private nav: NavController,
     private listsService: ListsService, private loadingController: LoadingController,
     private helperService: HelperServiceService,
