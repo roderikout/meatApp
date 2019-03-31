@@ -8,8 +8,11 @@ const routes: Routes = [
   { path: 'cut-detail/:id', loadChildren: './pages/cut-detail/cut-detail.module#CutDetailPageModule' },
   { path: 'cut-detail', loadChildren: './pages/cut-detail/cut-detail.module#CutDetailPageModule' },
   { path: 'recipe-list', loadChildren: './pages/recipe-list/recipe-list.module#RecipeListPageModule'},
+  { path: 'recipe-detail/:id' , loadChildren: './pages/recipe-detail/recipe-detail.module#RecipeDetailPageModule'},
+  { path: 'recipe-detail' , loadChildren: './pages/recipe-detail/recipe-detail.module#RecipeDetailPageModule'},
   { path: 'cut-detail-edit', loadChildren: './pages/cut-detail-edit/cut-detail-edit.module#CutDetailEditPageModule' },
   { path: 'cut-detail-edit/:id', loadChildren: './pages/cut-detail-edit/cut-detail-edit.module#CutDetailEditPageModule' },
+  { path: 'recipe-detail-edit', loadChildren: './pages/recipe-detail-edit/recipe-detail-edit.module#RecipeDetailEditPageModule' },
   ];
 
 @NgModule({

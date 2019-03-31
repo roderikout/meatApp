@@ -4,7 +4,6 @@ import { ListsService } from 'src/app/services/lists.service';
 import { NavController, LoadingController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { toArray } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cut-detail-edit',
@@ -39,19 +38,23 @@ export class CutDetailEditPage implements OnInit {
   }
 
   objToArray(object: object): string[] {
-    let keys = [];
-    for (let k in object) {
-      keys.push(k);
-    };
+    const keys = [];
+    for (const k in object) {
+      if (object.hasOwnProperty(k)) {
+        keys.push(k);
+      }
+    }
     return keys;
   }
 
   toObject(csvValue: string): object {
     const newObject = {};
     const newArray: string[] = this.toArray(csvValue);
-    for (let k in newArray){
-      let name: string = newArray[k];
-      newObject[name] = true;
+    for (const k in newArray) {
+      if (newArray.hasOwnProperty(k)) {
+        const name: string = newArray[k];
+        newObject[name] = true;
+      }
     }
     console.log(newObject);
     return newObject;

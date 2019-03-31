@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-title *ngIf="recipe">
+        {{recipe.recipeName}} Edit
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+    
+  <ion-content>
+    <ion-list lines="full">
+        <ion-item *ngIf="recipe">
+          <ion-label position="stacked">Nombre:</ion-label>
+          <ion-input reuired type="text" placeholder="Receta" [(ngModel)]="recipe.recipeName"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="recipe" text-wrap>
+          <ion-label position="stacked">Cortes:</ion-label>
+          <ion-input reuired type="text" placeholder="Cortes" [(ngModel)]="cutCSV"></ion-input>
+        </ion-item>
+    </ion-list>
+    <ion-button expand="full" (click)="saveRecipe()">Guardar</ion-button> 
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+      <ion-fab-button color="danger" routerLink="/recipe-list" routerDirection="forward" (click)="onRemove(recipeId)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>

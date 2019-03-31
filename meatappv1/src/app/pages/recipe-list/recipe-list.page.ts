@@ -10,7 +10,7 @@ import { ListsService } from '../../services/lists.service';
 })
 export class RecipeListPage implements OnInit {
   recipeList: Recipe[];
-  
+
   constructor(private listsService: ListsService) { }
 
   ngOnInit() {

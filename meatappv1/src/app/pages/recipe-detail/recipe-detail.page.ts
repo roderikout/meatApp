@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Recipe } from 'src/app/models/recipe.interface';
+import { ListsService } from 'src/app/services/lists.service';
+import { NavController, LoadingController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -6,10 +10,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recipe-detail.page.scss'],
 })
 export class RecipeDetailPage implements OnInit {
+  recipe: Recipe = {
+    id: '',
+    recipeName: '',
+    cutList: {},
+  };
 
-  constructor() { }
+  cutArray = [];
+  recipeId = null;
+
+  objToArray(object: object): string[] {
+    let keys = [];
+    for (let k in object) {
+      keys.push(k);
+    };
+    return keys;
+  }
+
+  constructor (private route: ActivatedRoute, private nav: NavController,
+    private listsService: ListsService, private loadingController: LoadingController,
+    ) {}
 
   ngOnInit() {
+    this.recipeId = this.route.snapshot.params['id'];
+    if (this.recipeId) {
+      this.loadRecipe();
+    }
+  }
+
+  async loadRecipe() {
+    const loading = await this.loadingController.create({
+      message: 'Loading.....'
+    });
+    await loading.present();
+    this.listsService.getRecipe(this.recipeId).subscribe(res => {
+      loading.dismiss();
+      this.recipe = res;
+      this.cutArray = this.objToArray(this.recipe.cutList);
+    });
   }
 
 }
