@@ -19,7 +19,6 @@ export class RecipeListPage implements OnInit {
   ionViewWillEnter() {
     this.listsService.getRecipeList().subscribe(res => {
       this.recipeList = res;
-      // console.log('Lista de cortes ', this.cutList);
     });
   }
 
