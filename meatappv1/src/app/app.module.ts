@@ -13,13 +13,14 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ListsService } from './services/lists.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
   AngularFireModule.initializeApp(environment.firebaseConfig), AngularFirestoreModule,
-  AngularFireDatabaseModule, RouterModule
+  AngularFireDatabaseModule, RouterModule, BrowserAnimationsModule
 ],
   providers: [
     StatusBar,
