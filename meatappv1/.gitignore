@@ -13,8 +13,6 @@ log.txt
 npm-debug.log*
 
 /src/environments/**
-environment.prod.ts
-environment.ts
 
 .idea/
 .ionic/
