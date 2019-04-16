@@ -42,12 +42,13 @@ export class CutDetailPage implements OnInit {
     private helperService: HelperServiceService,
     private alertController: AlertController, private globals: Globals,
     ) {
-      this.count = this.globals.country;
+      // this.count = this.globals.country;
     }
 
   ngOnInit(): void {
 
   }
+
 
   ionViewWillEnter() {
     this.loadStuff();
@@ -58,14 +59,7 @@ export class CutDetailPage implements OnInit {
     if (this.cutId) {
       this.loadCut();
     }
-    this.translatedObservableCutList = this.listsService.getTranslatedList().subscribe(res => {
-      this.translatedCutList = res;
-      this.countryGlob = this.globals.selectedCutCountry;
-      this.cutSelectedGlob = this.globals.cutSelectedTranslationId;
-      console.log(this.translatedCutList);
-      console.log(this.globals.selectedCutCountry);
-      console.log(this.globals.cutSelectedTranslationId);
-    });
+    this.loadCutSelected();
   }
 
   async loadCut() {
@@ -79,9 +73,19 @@ export class CutDetailPage implements OnInit {
         this.cut = res;
         this.globals.cutSelectedTranslationId = this.cut.translationId;
         this.globals.selectedCutCountry = this.cut.country;
+        this.globals.selectedCutTranslated = this.cut.cutName;
         this.recipeArray = this.helperService.objToArray(this.cut.recipeList).reverse();
       }
     });
+  }
+
+  async loadCutSelected(){
+      // this.translatedObservableCutList =
+      this.listsService.getTranslatedList().subscribe(res => {
+      this.translatedCutList = res;
+      this.countryGlob = this.globals.selectedCutCountry;
+      this.cutSelectedGlob = this.globals.cutSelectedTranslationId;
+    }); 
   }
 
   async removeRecipeFromCut (index: number) {
@@ -130,7 +134,12 @@ export class CutDetailPage implements OnInit {
 
   languageSelected(count: string) {
     this.listsService.changeCountrySelected(count);
-    this.translatedObservableCutList.unsubscribe();
+    // this.translatedObservableCutList.unsubscribe();
     this.loadStuff();
+    this.goToCountryPage();
+  }
+
+  goToCountryPage(){
+    this.nav.navigateForward('/country-page');
   }
 }

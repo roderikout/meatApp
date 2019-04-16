@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'recipe-detail/:id' , loadChildren: './pages/recipe-detail/recipe-detail.module#RecipeDetailPageModule'},
   { path: 'recipe-detail-edit', loadChildren: './pages/recipe-detail-edit/recipe-detail-edit.module#RecipeDetailEditPageModule' },
   { path: 'recipe-detail-edit/:id', loadChildren: './pages/recipe-detail-edit/recipe-detail-edit.module#RecipeDetailEditPageModule' },
+  { path: 'country-page', loadChildren: './pages/country-page/country-page.module#CountryPagePageModule' },
   ];
 
 @NgModule({

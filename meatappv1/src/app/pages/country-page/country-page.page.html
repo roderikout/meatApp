@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        {{ cutSelectedTranslate }} en {{ count }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+    
+  <ion-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item *ngIf="translatedCut">
+            <ion-label text-center>
+              <h1>{{translatedCut.cutName}}</h1>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>

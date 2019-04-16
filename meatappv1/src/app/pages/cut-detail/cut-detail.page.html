@@ -23,17 +23,12 @@
       </ion-row>
       <ion-row>
           <ion-col size-md="6" offset-md='3'>
-          <ion-item>
             <ion-label>País</ion-label>
             <ion-select #sel interface="popover" (ionChange)="languageSelected(sel.value)" [(ngModel)]="count" placeholder="Selecciona uno:">
               <ion-select-option value="AR">Argentina</ion-select-option>
               <ion-select-option value="ES">España</ion-select-option>
               <ion-select-option value="VE">Venezuela</ion-select-option>
             </ion-select>
-          </ion-item>
-          <ion-item *ngIf="translatedCutList.length > 0">
-              <h5>{{ translatedCutList[0].cutName }}</h5>
-          </ion-item>
           </ion-col>
         </ion-row>
       <ion-row>
