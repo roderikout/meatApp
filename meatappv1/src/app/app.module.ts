@@ -14,19 +14,25 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { ListsService } from './services/lists.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './material/material.module';
+
+import { Globals } from './globals';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-  AngularFireModule.initializeApp(environment.firebaseConfig), AngularFirestoreModule,
-  AngularFireDatabaseModule, RouterModule, BrowserAnimationsModule
-],
+    AngularFireModule.initializeApp(environment.firebaseConfig), AngularFirestoreModule,
+    AngularFireDatabaseModule, RouterModule, BrowserAnimationsModule, MaterialModule,
+    FormsModule, ReactiveFormsModule
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ListsService
+    ListsService,
+    Globals
   ],
   bootstrap: [AppComponent]
 })

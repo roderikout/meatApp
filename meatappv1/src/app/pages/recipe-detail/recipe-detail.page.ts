@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from 'src/app/models/recipe.interface';
 import { ListsService } from 'src/app/services/lists.service';
 import { HelperServiceService } from 'src/app/services/helper-service.service';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController, } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
+import { Globals } from '../../globals';
 
 @Component({
   providers: [HelperServiceService],
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './recipe-detail.page.html',
   styleUrls: ['./recipe-detail.page.scss'],
 })
+
 export class RecipeDetailPage implements OnInit {
   recipe: Recipe = {
     id: '',
@@ -20,21 +22,20 @@ export class RecipeDetailPage implements OnInit {
 
   cutArray = [];
   recipeId = null;
-
-/*   objToArray(object: object): string[] {
-    let keys = [];
-    for (let k in object) {
-      keys.push(k);
-    };
-    return keys;
-  } */
+  count: string;
 
   constructor (private route: ActivatedRoute, private nav: NavController,
     private listsService: ListsService, private loadingController: LoadingController,
     private helperService: HelperServiceService,
-    ) {}
+    private alertController: AlertController, private globals: Globals,
+    ) {
+      this.count = this.globals.country;
+    }
 
-  ngOnInit() {
+  ngOnInit(): void {
+  }
+
+  ionViewWillEnter() {
     this.recipeId = this.route.snapshot.params['id'];
     if (this.recipeId) {
       this.loadRecipe();
@@ -48,9 +49,54 @@ export class RecipeDetailPage implements OnInit {
     await loading.present();
     this.listsService.getRecipe(this.recipeId).subscribe(res => {
       loading.dismiss();
-      this.recipe = res;
-      this.cutArray = this.helperService.objToArray(this.recipe.cutList);
+      if (res) {
+        this.recipe = res;
+        this.cutArray = this.helperService.objToArray(this.recipe.cutList).reverse();
+      }
     });
   }
 
+  async removeCutFromRecipe(index: number) {
+    this.cutArray.splice(index, 1);
+    this.saveRecipeAfterRemove();
+  }
+
+  async saveRecipeAfterRemove() {
+    const loading = await this.loadingController.create({
+      message: 'Saving.....'
+    });
+    await loading.present();
+    if (this.cutArray.length > 0) {
+      this.recipe.cutList = this.helperService.arrayToObject(this.cutArray);
+    } else {
+      this.presentAlert();
+    }
+      this.listsService.updateRecipe(this.recipe, this.recipeId).then(() => {
+        loading.dismiss();
+        // this.nav.navigateForward(`/recipe-detail/${this.recipeId}`);
+        this.nav.navigateForward('/recipe-list');
+      });
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Alerta!',
+      subHeader: 'Borrar receta',
+      message: 'Borrar el último corte borrará la receta',
+      buttons: [{
+        text: 'Cancel',
+        role: 'cancel',
+        cssClass: 'secondary',
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          this.listsService.removeRecipe(this.recipeId);
+        }
+      }
+      ]
+    });
+
+    await alert.present();
+  }
 }

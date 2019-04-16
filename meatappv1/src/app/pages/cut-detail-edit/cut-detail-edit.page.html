@@ -4,26 +4,42 @@
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
     <ion-title *ngIf="cut">
-      {{cut.cutName}} Edit
+      Editar: {{cut.cutName}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
-  
+
 <ion-content>
-  <ion-list lines="full">
-      <ion-item *ngIf="cut">
-        <ion-label position="stacked">Nombre:</ion-label>
-        <ion-input reuired type="text" placeholder="Corte" [(ngModel)]="cutName"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="cut" text-wrap>
-        <ion-label position="stacked">Recetas:</ion-label>
-        <ion-input reuired type="text" placeholder="Recetas" [(ngModel)]="recipeCSV"></ion-input>
-      </ion-item>
-  </ion-list>
-  <ion-button expand="full" (click)="saveCut()">Guardar</ion-button> 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-    <ion-fab-button color="danger" routerLink="/cut-list" routerDirection="forward" (click)="onRemove(cutId)">
-      <ion-icon name="trash"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+    <ion-list lines="full">
+        <ion-item *ngIf="cut">
+          <ion-label position="stacked">Nombre:</ion-label>
+          <ion-input reuired type="text" placeholder="Receta" [(ngModel)]="cut.cutName"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="cut">
+          <ion-label position="stacked">Recetas:</ion-label>
+          <div class="ion-text-start">
+            <h4> {{recipeCSV}} </h4>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Añade una o varias recetas separadas por comas:</ion-label>
+          <form class="input-form">
+            <mat-form-field class="input-full-width">
+              <input type="text" placeholder="Recetas ideales con este corte" matInput [formControl]="recipeForm" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.recipeName">
+                  {{option.recipeName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            </form>
+        </ion-item>
+    </ion-list>
+    <ion-button expand="full" (click)="saveCut()">Guardar</ion-button>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+      <ion-fab-button color="danger" routerLink="/cut-list" routerDirection="forward" (click)="presentAlert(cutId)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>
+  

@@ -1,13 +1,24 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      MeatApp v-1
+      MeatApp v-1 {{count}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-grid>
+    <ion-row>
+      <ion-col size-md="6" offset-md='3'>
+      <ion-item>
+        <ion-label>País</ion-label>
+        <ion-select #sel interface="popover" (ionChange)="languageSelected(sel.value)" [(ngModel)]="count" placeholder="Selecciona uno:">
+          <ion-select-option value="AR">Argentina</ion-select-option>
+          <ion-select-option value="ES">España</ion-select-option>
+          <ion-select-option value="VE">Venezuela</ion-select-option>
+        </ion-select>
+      </ion-item>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col size-md="6" offset-md='3'>
         <ion-list>

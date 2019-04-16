@@ -3,5 +3,6 @@ export interface MeatCut {
     cutName: string;
     recipeList?: object;
     places?: string[];
-    languages?: string[];
+    country?: string;
+    translationId?: string;
 }

@@ -4,7 +4,7 @@
         <ion-back-button defaultHref="home"></ion-back-button>
       </ion-buttons>
       <ion-title *ngIf="recipe">
-        {{recipe.recipeName}} Edit
+        Editar: {{recipe.recipeName}}
       </ion-title>
     </ion-toolbar>
   </ion-header>
@@ -15,14 +15,29 @@
           <ion-label position="stacked">Nombre:</ion-label>
           <ion-input reuired type="text" placeholder="Receta" [(ngModel)]="recipe.recipeName"></ion-input>
         </ion-item>
-        <ion-item *ngIf="recipe" text-wrap>
+        <ion-item *ngIf="recipe">
           <ion-label position="stacked">Cortes:</ion-label>
-          <ion-input reuired type="text" placeholder="Cortes" [(ngModel)]="cutCSV"></ion-input>
+          <div class="ion-text-start">
+            <h4> {{cutCSV}} </h4>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Añade uno o varios cortes separados por comas:</ion-label>
+          <form class="input-form">
+            <mat-form-field class="input-full-width">
+              <input type="text" placeholder="Ideal para esta receta" matInput [formControl]="cutsForm" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.cutName">
+                  {{option.cutName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
         </ion-item>
     </ion-list>
-    <ion-button expand="full" (click)="saveRecipe()">Guardar</ion-button> 
+    <ion-button expand="full" (click)="saveRecipe()">Guardar</ion-button>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-      <ion-fab-button color="danger" routerLink="/recipe-list" routerDirection="forward" (click)="onRemove(recipeId)">
+      <ion-fab-button color="danger" routerLink="/recipe-list" routerDirection="forward" (click)="presentAlert(recipeId)">
         <ion-icon name="trash"></ion-icon>
       </ion-fab-button>
     </ion-fab>

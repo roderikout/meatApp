@@ -9,16 +9,19 @@ export class HelperServiceService {
   // Helper functions
   csvToArray(csvString: string): string[] {
     let arrayOfItems: string[];
-    const finalArrayOfItems: string[] = [];
+    let finalArrayOfItems: string[] = [];
     arrayOfItems = csvString.split(',');
     for (let i = 0; i < arrayOfItems.length; i++) {
       const capitalizadItem = this.titleCase(arrayOfItems[i]);
       finalArrayOfItems[i] = capitalizadItem;
     }
+    finalArrayOfItems = finalArrayOfItems.filter(function(item) {
+      return item.trim() !== '';
+    });
     return finalArrayOfItems;
   }
 
-  csvToObject(csvValue: string): object { // solo para objetos en firebase que necesitan un booleano
+  csvToObjectCuts(csvValue: string): object { // solo para objetos en firebase que necesitan un booleano
     const newObject = {};
     const newArray: string[] = this.csvToArray(csvValue);
     for (const k in newArray) {

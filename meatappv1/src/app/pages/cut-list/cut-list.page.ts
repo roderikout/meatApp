@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MeatCut } from '../../models/meatCut.interface';
 import { ListsService } from '../../services/lists.service';
+import { Globals } from '../../globals';
 
 @Component({
   providers: [ListsService],
@@ -10,8 +11,12 @@ import { ListsService } from '../../services/lists.service';
 })
 export class CutListPage implements OnInit {
   cutList: MeatCut[];
+  count: string;
+  tId: string;
 
-  constructor(private listsService: ListsService) {}
+  constructor(private listsService: ListsService, private globals: Globals) {
+    this.count = this.globals.country;
+  }
 
   ngOnInit() {
 

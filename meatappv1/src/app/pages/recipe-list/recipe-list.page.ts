@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../../models/recipe.interface';
 import { ListsService } from '../../services/lists.service';
+import { Globals } from '../../globals';
 
 @Component({
   providers: [ListsService],
@@ -10,8 +11,11 @@ import { ListsService } from '../../services/lists.service';
 })
 export class RecipeListPage implements OnInit {
   recipeList: Recipe[];
+  count: string;
 
-  constructor(private listsService: ListsService) { }
+  constructor(private listsService: ListsService, private globals: Globals) {
+    this.count = this.globals.country;
+   }
 
   ngOnInit() {
   }

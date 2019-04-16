@@ -1,49 +1,53 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="home"></ion-back-button>
-      </ion-buttons>
-      <ion-title *ngIf="recipe">
-        {{ recipe.recipeName }}
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-    
-  <ion-content>
-    <ion-grid>
-      <ion-row>
-        <ion-col size-md="6" offset-md='3'>
-          <ion-list>
-            <ion-item *ngIf="recipe">
-              Nombre:
-            </ion-item>
-            <ion-item>
-              <h3>{{ recipe.recipeName }}</h3>
-            </ion-item>
-            <ion-item>
-              Cortes:
-            </ion-item>
-            <ion-item>
-              <ion-grid>
-                <ion-row>
-                  <ion-col size-md="5" offset-md='3'>
-                    <ion-item *ngFor="let cuts of cutArray">
-                      <h4>{{ cuts }}</h4>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            </ion-item>
-          </ion-list>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-      
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
-      <ion-fab-button color="primary" [routerLink]="['/recipe-detail-edit', recipe.id]" routerDirection="forward">
-        <ion-icon name="create"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
-  
-  
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="recipe">
+      {{ recipe.recipeName }} {{ count }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-row>
+      <ion-col size-md="6" offset-md='3' *ngIf="recipe">
+        <ion-item>
+          Nombre:
+        </ion-item>
+        <ion-item>
+          <h3>{{ recipe.recipeName }}</h3>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        Cortes:
+      </ion-item>
+    </ion-row>
+    <ion-row size-md="6" offset-md='3' *ngFor="let cuts of cutArray">
+      <ion-col >
+
+        <ion-item-sliding>
+
+          <ion-item detail>
+              <h4>{{ cuts }}</h4>
+          </ion-item>
+
+          <ion-item-options side="end">
+            <ion-button color="danger" (click)="removeCutFromRecipe(cutArray.indexOf(cuts))">Delete</ion-button>
+          </ion-item-options>
+
+        </ion-item-sliding>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-list>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" color="danger">
+    <ion-fab-button color="primary" [routerLink]="['/recipe-detail-edit', recipe.id]" routerDirection="forward">
+      <ion-icon name="create"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
